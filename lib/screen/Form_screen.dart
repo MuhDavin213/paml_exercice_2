@@ -13,6 +13,8 @@ class _FormScreenState extends State<FormScreen> {
   TextEditingController rate_resto = TextEditingController();
   TextEditingController nama = TextEditingController();
   TextEditingController alamat = TextEditingController();
+
+  _simpan() {}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,6 +41,11 @@ class _FormScreenState extends State<FormScreen> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Raring resto tidak boleh kosong";
+                    }
+                  },
                 ),
                 SizedBox(
                   height: 10,
@@ -51,6 +58,11 @@ class _FormScreenState extends State<FormScreen> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Raring resto tidak boleh kosong";
+                    }
+                  },
                 ),
                 SizedBox(
                   height: 10,
@@ -63,6 +75,11 @@ class _FormScreenState extends State<FormScreen> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Raring resto tidak boleh kosong";
+                    }
+                  },
                 ),
                 SizedBox(
                   height: 10,
@@ -70,7 +87,11 @@ class _FormScreenState extends State<FormScreen> {
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Color.fromARGB(255, 32, 231, 195)),
-                    onPressed: () {},
+                    onPressed: () {
+                      if (formKey.currentState!.validate()) {
+                        _simpan();
+                      }
+                    },
                     child: Text("Simpan"))
               ],
             ),
