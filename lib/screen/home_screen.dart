@@ -51,7 +51,13 @@ class _HomeScreenState extends State<HomeScreen> {
           return Card(
             child: ListTile(
               title: Text(_listdata[index]['nama']),
-              subtitle: Text(_listdata[index]['rate_resto']),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(_listdata[index]['rate_resto']),
+                  Text(_listdata[index]['alamat']),
+                ],
+              ),
             ),
           );
         }),
