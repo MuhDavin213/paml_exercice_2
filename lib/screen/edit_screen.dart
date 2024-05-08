@@ -19,9 +19,10 @@ class _EditScreenState extends State<EditScreen> {
   TextEditingController nama = TextEditingController();
   TextEditingController alamat = TextEditingController();
 
-  Future _simpan() async {
+  Future _update() async {
     final response = await http
         .post(Uri.parse('http://192.168.1.11/api/restoapi/edit.php'), body: {
+      "id": id.text,
       "rate_resto": rate_resto.text,
       "nama": nama.text,
       "alamat": alamat.text,
@@ -65,7 +66,7 @@ class _EditScreenState extends State<EditScreen> {
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return "Raring resto tidak boleh kosong";
+                      return "Rating resto tidak boleh kosong";
                     }
                     return null;
                   },
@@ -114,16 +115,16 @@ class _EditScreenState extends State<EditScreen> {
                         backgroundColor: Color.fromARGB(255, 32, 231, 195)),
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
-                        _simpan().then((value) {
+                        _update().then((value) {
                           if (value) {
                             final snackBar = SnackBar(
-                              content: const Text('Data telah Tersimpan'),
+                              content: const Text('Data telah Update'),
                             );
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(snackBar);
                           } else {
                             final snackBar = SnackBar(
-                              content: const Text('Yay! A SnackBar!'),
+                              content: const Text('Gagal Update'),
                               action: SnackBarAction(
                                 label: 'Undo',
                                 onPressed: () {
