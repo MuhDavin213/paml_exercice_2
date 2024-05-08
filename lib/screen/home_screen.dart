@@ -30,6 +30,24 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  Future _delete(String id) async {
+    try {
+      final Response = await http.post(
+          Uri.parse('http://192.168.1.11/api/restoapi/delete.php'),
+          body: {
+            "rate_resto": id,
+          });
+      if (Response.statusCode == 200) {
+        final data = jsonDecode(Response.body);
+        setState(() {
+          _listdata = data;
+        });
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   void initState() {
     _getdata();
