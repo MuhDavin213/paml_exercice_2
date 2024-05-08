@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
+import 'package:paml_exercice_2/screen/Form_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -52,6 +53,18 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         }),
       ),
+      floatingActionButton: FloatingActionButton(
+          child: Text(
+            "+",
+            style: TextStyle(fontSize: 25),
+          ),
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => FormScreen(),
+                ));
+          }),
     );
   }
 }
