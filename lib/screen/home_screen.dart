@@ -41,8 +41,11 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Kuliner Tour"),
+        backgroundColor: Color.fromARGB(146, 7, 212, 205),
+        elevation: 15,
       ),
       body: ListView.builder(
+        padding: EdgeInsets.all(10),
         itemCount: _listdata.length,
         itemBuilder: ((context, index) {
           return Card(
