@@ -92,6 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 trailing: IconButton(
                     onPressed: () {
                       showDialog(
+                          barrierDismissible: false,
                           context: context,
                           builder: ((context) {
                             return AlertDialog(
