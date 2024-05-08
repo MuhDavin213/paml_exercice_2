@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 
 class FormScreen extends StatefulWidget {
   const FormScreen({super.key});
@@ -14,7 +16,19 @@ class _FormScreenState extends State<FormScreen> {
   TextEditingController nama = TextEditingController();
   TextEditingController alamat = TextEditingController();
 
-  _simpan() {}
+  Future _simpan() async {
+    final response = await http
+        .post(Uri.parse('http://192.168.1.11/api/restoapi/read.php'), body: {
+      "rate_resto": rate_resto.text,
+      "nama": nama.text,
+      "alamat": alamat.text,
+    });
+    if (response.statusCode == 200) {
+      return true;
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,6 +59,7 @@ class _FormScreenState extends State<FormScreen> {
                     if (value!.isEmpty) {
                       return "Raring resto tidak boleh kosong";
                     }
+                    return null;
                   },
                 ),
                 SizedBox(
@@ -60,8 +75,9 @@ class _FormScreenState extends State<FormScreen> {
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return "Raring resto tidak boleh kosong";
+                      return "Nama resto tidak boleh kosong";
                     }
+                    return null;
                   },
                 ),
                 SizedBox(
@@ -77,8 +93,9 @@ class _FormScreenState extends State<FormScreen> {
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return "Raring resto tidak boleh kosong";
+                      return "Alamat resto tidak boleh kosong";
                     }
+                    return null;
                   },
                 ),
                 SizedBox(
@@ -89,7 +106,27 @@ class _FormScreenState extends State<FormScreen> {
                         backgroundColor: Color.fromARGB(255, 32, 231, 195)),
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
-                        _simpan();
+                        _simpan().then((value) {
+                          if (value) {
+                            final snackBar = SnackBar(
+                              content: const Text('Data telah Tersimpan'),
+                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          } else {
+                            final snackBar = SnackBar(
+                              content: const Text('Yay! A SnackBar!'),
+                              action: SnackBarAction(
+                                label: 'Undo',
+                                onPressed: () {
+                                  // Some code to undo the change.
+                                },
+                              ),
+                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          }
+                        });
                       }
                     },
                     child: Text("Simpan"))
