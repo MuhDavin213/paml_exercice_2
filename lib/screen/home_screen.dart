@@ -73,6 +73,30 @@ class _HomeScreenState extends State<HomeScreen> {
                     Text(_listdata[index]['alamat']),
                   ],
                 ),
+                trailing: IconButton(
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: ((context) {
+                            return AlertDialog(
+                              content:
+                                  Text('are u sure to Delete this Data ??'),
+                              actions: [
+                                ElevatedButton(
+                                  onPressed: () {},
+                                  child: Text("Yakin!!"),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text("Tidak jadi"),
+                                ),
+                              ],
+                            );
+                          }));
+                    },
+                    icon: Icon(Icons.delete_forever)),
               ),
             ),
           );
