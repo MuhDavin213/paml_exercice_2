@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 import 'package:paml_exercice_2/screen/Form_screen.dart';
+import 'package:paml_exercice_2/screen/edit_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -49,14 +49,30 @@ class _HomeScreenState extends State<HomeScreen> {
         itemCount: _listdata.length,
         itemBuilder: ((context, index) {
           return Card(
-            child: ListTile(
-              title: Text(_listdata[index]['nama']),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(_listdata[index]['rate_resto']),
-                  Text(_listdata[index]['alamat']),
-                ],
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EditScreen(
+                        ListData: {
+                          "id": _listdata[index]['id'],
+                          "rate_resto": _listdata[index]['rate_resto'],
+                          "nama": _listdata[index]['nama'],
+                          "alamat": _listdata[index]['alamat']
+                        },
+                      ),
+                    ));
+              },
+              child: ListTile(
+                title: Text(_listdata[index]['nama']),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(_listdata[index]['rate_resto']),
+                    Text(_listdata[index]['alamat']),
+                  ],
+                ),
               ),
             ),
           );
