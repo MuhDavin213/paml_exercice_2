@@ -38,11 +38,9 @@ class _HomeScreenState extends State<HomeScreen> {
             "rate_resto": id,
           });
       if (Response.statusCode == 200) {
-        final data = jsonDecode(Response.body);
-        setState(() {
-          _listdata = data;
-        });
-      }
+        return true;
+      } else
+        return false;
     } catch (e) {
       print(e);
     }
@@ -101,7 +99,38 @@ class _HomeScreenState extends State<HomeScreen> {
                                   Text('are u sure to Delete this Data ??'),
                               actions: [
                                 ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    _delete(_listdata[index]['rate_resto'])
+                                        .then((value) {
+                                      if (value) {
+                                        final snackBar = SnackBar(
+                                          content:
+                                              const Text('Data telah Dihapus'),
+                                        );
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(snackBar);
+                                      } else {
+                                        final snackBar = SnackBar(
+                                          content:
+                                              const Text('Data Gagal Dihapus '),
+                                          action: SnackBarAction(
+                                            label: 'Undo',
+                                            onPressed: () {
+                                              // Some code to undo the change.
+                                            },
+                                          ),
+                                        );
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(snackBar);
+                                      }
+                                    });
+                                    Navigator.pushAndRemoveUntil(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: ((context) =>
+                                                HomeScreen())),
+                                        (route) => false);
+                                  },
                                   child: Text("Yakin!!"),
                                 ),
                                 ElevatedButton(
