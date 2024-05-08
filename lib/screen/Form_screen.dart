@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 import 'package:paml_exercice_2/screen/home_screen.dart';
 
