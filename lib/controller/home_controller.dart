@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:paml_exercice_2/model/resto.dart';
+import 'package:paml_exercice_2/screen/detail_screen.dart';
 import 'package:paml_exercice_2/service/home_service.dart';
 import 'package:paml_exercice_2/screen/Form_screen.dart';
 import 'package:paml_exercice_2/screen/edit_screen.dart';
@@ -28,6 +30,15 @@ class HomeController {
       context,
       MaterialPageRoute(
         builder: (context) => const FormScreen(),
+      ),
+    );
+  }
+
+  void navigateToDetailScreen(BuildContext context, Resto resto) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DetailScreen(resto: resto),
       ),
     );
   }

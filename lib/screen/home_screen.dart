@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paml_exercice_2/controller/home_controller.dart';
+import 'package:paml_exercice_2/model/resto.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -40,7 +41,8 @@ class _HomeScreenState extends State<HomeScreen> {
           return Card(
             child: InkWell(
               onTap: () {
-                _controller.navigateToEditScreen(context, _listData[index]);
+                _controller.navigateToDetailScreen(context,
+                    Resto(id: 1, rate_resto: '', nama: '', alamat: ''));
               },
               child: ListTile(
                 title: Text(_listData[index]['nama']),
@@ -51,11 +53,23 @@ class _HomeScreenState extends State<HomeScreen> {
                     Text(_listData[index]['alamat']),
                   ],
                 ),
-                trailing: IconButton(
-                  onPressed: () {
-                    _showDeleteDialog(_listData[index]['rate_resto']);
-                  },
-                  icon: const Icon(Icons.delete_forever),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        _showDeleteDialog(_listData[index]['rate_resto']);
+                      },
+                      icon: const Icon(Icons.delete_forever),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        _controller.navigateToEditScreen(
+                            context, _listData[index]);
+                      },
+                      icon: Icon(Icons.info),
+                    ),
+                  ],
                 ),
               ),
             ),
