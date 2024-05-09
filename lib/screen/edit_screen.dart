@@ -1,151 +1,126 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:paml_exercice_2/screen/home_screen.dart';
+import 'package:paml_exercice_2/controller/edit_controller.dart';
 
 class EditScreen extends StatefulWidget {
-  final Map ListData;
-  const EditScreen({Key? key, required this.ListData}) : super(key: key);
-  // const EditScreen({super.key, required this.ListData});
+  final Map<String, dynamic> listData;
+
+  const EditScreen({Key? key, required this.listData}) : super(key: key);
 
   @override
   State<EditScreen> createState() => _EditScreenState();
 }
 
 class _EditScreenState extends State<EditScreen> {
-  final formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _rateRestoController = TextEditingController();
+  final TextEditingController _namaController = TextEditingController();
+  final TextEditingController _alamatController = TextEditingController();
 
-  TextEditingController id = TextEditingController();
-  TextEditingController rate_resto = TextEditingController();
-  TextEditingController nama = TextEditingController();
-  TextEditingController alamat = TextEditingController();
+  final EditController _controller = EditController();
 
-  Future _update() async {
-    final response = await http
-        .post(Uri.parse('http://192.168.1.33/api/restoapi/edit.php'), body: {
-      "id": id.text,
-      "rate_resto": rate_resto.text,
-      "nama": nama.text,
-      "alamat": alamat.text,
-    });
-    if (response.statusCode == 200) {
-      return true;
-    }
-    return false;
+  @override
+  void initState() {
+    _rateRestoController.text = widget.listData['rate_resto'];
+    _namaController.text = widget.listData['nama'];
+    _alamatController.text = widget.listData['alamat'];
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    id.text = widget.ListData['id'];
-    rate_resto.text = widget.ListData['rate_resto'];
-    nama.text = widget.ListData['nama'];
-    alamat.text = widget.ListData['alamat'];
-
     return Scaffold(
       appBar: AppBar(
-        title: Text("Edit Data"),
-        backgroundColor: Color.fromARGB(146, 7, 212, 205),
+        title: const Text("Edit Data"),
+        backgroundColor: const Color.fromARGB(146, 7, 212, 205),
         elevation: 15,
       ),
-      body: Container(
-        child: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Form(
-            key: formKey,
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 10,
-                ),
-                TextFormField(
-                  controller: rate_resto,
-                  decoration: InputDecoration(
-                    hintText: "Rating Restaurant",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
+      body: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              TextFormField(
+                controller: _rateRestoController,
+                decoration: InputDecoration(
+                  hintText: "Rating Restaurant",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
                   ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Rating resto tidak boleh kosong";
-                    }
-                    return null;
-                  },
                 ),
-                SizedBox(
-                  height: 10,
-                ),
-                TextFormField(
-                  controller: nama,
-                  decoration: InputDecoration(
-                    hintText: "Nama Restaurant",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Rating resto tidak boleh kosong";
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: 10),
+              TextFormField(
+                controller: _namaController,
+                decoration: InputDecoration(
+                  hintText: "Nama Restaurant",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
                   ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Nama resto tidak boleh kosong";
-                    }
-                    return null;
-                  },
                 ),
-                SizedBox(
-                  height: 10,
-                ),
-                TextFormField(
-                  controller: alamat,
-                  decoration: InputDecoration(
-                    hintText: "Alamat Restaurant",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Nama resto tidak boleh kosong";
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: 10),
+              TextFormField(
+                controller: _alamatController,
+                decoration: InputDecoration(
+                  hintText: "Alamat Restaurant",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
                   ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Alamat resto tidak boleh kosong";
-                    }
-                    return null;
-                  },
                 ),
-                SizedBox(
-                  height: 10,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Alamat resto tidak boleh kosong";
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: 10),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color.fromARGB(255, 32, 231, 195),
                 ),
-                ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromARGB(255, 32, 231, 195)),
-                    onPressed: () {
-                      if (formKey.currentState!.validate()) {
-                        _update().then((value) {
-                          if (value) {
-                            final snackBar = SnackBar(
-                              content: const Text('Data telah Update'),
-                            );
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(snackBar);
-                          } else {
-                            final snackBar = SnackBar(
-                              content: const Text('Gagal Update'),
-                              action: SnackBarAction(
-                                label: 'Undo',
-                                onPressed: () {
-                                  // Some code to undo the change.
-                                },
-                              ),
-                            );
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(snackBar);
-                          }
-                        });
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                                builder: ((context) => HomeScreen())),
-                            (route) => false);
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    final Map<String, String> data = {
+                      "id": widget.listData['id'],
+                      "rate_resto": _rateRestoController.text,
+                      "nama": _namaController.text,
+                      "alamat": _alamatController.text,
+                    };
+                    _controller.updateData(data).then((value) {
+                      if (value) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Data telah diupdate'),
+                          ),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Gagal update data'),
+                          ),
+                        );
                       }
-                    },
-                    child: Text("Update"))
-              ],
-            ),
+                      _controller.navigateToHomeScreen(context);
+                    });
+                  }
+                },
+                child: Text("Update"),
+              ),
+            ],
           ),
         ),
       ),
