@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paml_exercice_2/controller/form_controller.dart';
+import 'package:paml_exercice_2/screen/map_screen.dart';
 
 class FormScreen extends StatefulWidget {
   const FormScreen({Key? key}) : super(key: key);
@@ -15,6 +16,20 @@ class _FormScreenState extends State<FormScreen> {
   final TextEditingController _alamatController = TextEditingController();
 
   final FormController _controller = FormController();
+
+  // Fungsi untuk membuka MapScreen
+  _openMapScreen() async {
+    final selectedLocation = await Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => MapScreen(onLocationSelected: (address) {
+                // Set alamat yang dipilih ke dalam TextFormField
+                setState(() {
+                  _alamatController.text = address;
+                });
+              })),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +49,7 @@ class _FormScreenState extends State<FormScreen> {
                 controller: _rateRestoController,
                 decoration: InputDecoration(
                   hintText: "Rating Restaurant",
+                  labelText: "Rating 1-10",
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
@@ -50,6 +66,7 @@ class _FormScreenState extends State<FormScreen> {
                 controller: _namaController,
                 decoration: InputDecoration(
                   hintText: "Nama Restaurant",
+                  labelText: "Nama Restaurant",
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
@@ -66,8 +83,15 @@ class _FormScreenState extends State<FormScreen> {
                 controller: _alamatController,
                 decoration: InputDecoration(
                   hintText: "Alamat Restaurant",
+                  labelText: "Alamat Resto",
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
+                  ),
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      _openMapScreen();
+                    },
+                    icon: Icon(Icons.location_on),
                   ),
                 ),
                 validator: (value) {
