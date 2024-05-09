@@ -33,13 +33,4 @@ class HomeController {
       ),
     );
   }
-
-  void navigateToDetailScreen(BuildContext context, Resto resto) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => DetailScreen(resto: resto),
-      ),
-    );
-  }
 }

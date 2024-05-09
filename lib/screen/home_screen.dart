@@ -40,10 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
         itemBuilder: (context, index) {
           return Card(
             child: InkWell(
-              onTap: () {
-                _controller.navigateToDetailScreen(context,
-                    Resto(id: 1, rate_resto: '', nama: '', alamat: ''));
-              },
+              onTap: () {},
               child: ListTile(
                 title: Text(_listData[index]['nama']),
                 subtitle: Column(
