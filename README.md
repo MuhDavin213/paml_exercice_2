@@ -4,6 +4,9 @@
 
 ![image](https://github.com/MuhDavin213/paml_exercice_2/assets/114916198/5b72783f-0d32-4719-a745-bf281c31997b)
 
+## - Detail Screen
+
+![image](https://github.com/MuhDavin213/paml_exercice_2/assets/114916198/56ca495a-1815-48cc-a7a9-972b73ab13d6)
 
 
 ## - Form and Validation
