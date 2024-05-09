@@ -21,7 +21,7 @@ class _EditScreenState extends State<EditScreen> {
 
   Future _update() async {
     final response = await http
-        .post(Uri.parse('http://192.168.1.11/api/restoapi/edit.php'), body: {
+        .post(Uri.parse('http://192.168.1.33/api/restoapi/edit.php'), body: {
       "id": id.text,
       "rate_resto": rate_resto.text,
       "nama": nama.text,

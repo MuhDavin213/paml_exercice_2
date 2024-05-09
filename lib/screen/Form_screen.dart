@@ -18,7 +18,7 @@ class _FormScreenState extends State<FormScreen> {
 
   Future _simpan() async {
     final response = await http
-        .post(Uri.parse('http://192.168.1.11/api/restoapi/create.php'), body: {
+        .post(Uri.parse('http://192.168.1.33/api/restoapi/create.php'), body: {
       "rate_resto": rate_resto.text,
       "nama": nama.text,
       "alamat": alamat.text,

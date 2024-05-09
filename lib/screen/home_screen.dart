@@ -18,7 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future _getdata() async {
     try {
       final Response = await http
-          .get(Uri.parse('http://192.168.1.11/api/restoapi/read.php'));
+          .get(Uri.parse('http://192.168.1.33/api/restoapi/read.php'));
       if (Response.statusCode == 200) {
         final data = jsonDecode(Response.body);
         setState(() {
@@ -33,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future _delete(String id) async {
     try {
       final Response = await http.post(
-          Uri.parse('http://192.168.1.11/api/restoapi/delete.php'),
+          Uri.parse('http://192.168.1.33/api/restoapi/delete.php'),
           body: {
             "rate_resto": id,
           });
@@ -104,6 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     _delete(_listdata[index]['rate_resto'])
                                         .then((value) {
                                       if (value) {
+                                        _listdata.removeAt(index);
                                         final snackBar = SnackBar(
                                           content:
                                               const Text('Data telah Dihapus'),
