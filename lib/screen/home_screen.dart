@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:paml_exercice_2/controller/home_controller.dart';
 import 'package:paml_exercice_2/model/resto.dart';
+import 'package:paml_exercice_2/screen/detail_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -40,7 +41,19 @@ class _HomeScreenState extends State<HomeScreen> {
         itemBuilder: (context, index) {
           return Card(
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DetailScreen(ListData: {
+                      'id': _listData[index]['id'],
+                      'rate_resto': _listData[index]['rate_resto'],
+                      'nama': _listData[index]['nama'],
+                      'notelp': _listData[index]['notelp'],
+                    }),
+                  ),
+                );
+              },
               child: ListTile(
                 title: Text(_listData[index]['nama']),
                 subtitle: Column(
