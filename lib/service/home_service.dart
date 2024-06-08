@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class RestoService {
-  final String baseUrl = 'http://192.168.1.33/api/restoapi/';
+  final String baseUrl = 'http://192.168.56.1/api/restoapi/';
 
   Future<List<Map<String, dynamic>>> getData() async {
     final response = await http.get(Uri.parse('$baseUrl/read.php'));

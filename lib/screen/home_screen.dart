@@ -108,6 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
           actions: [
             ElevatedButton(
               onPressed: () {
+                setState(() {});
                 _controller.deleteData(id).then((value) {
                   if (value) {
                     _listData.removeWhere((data) => data['rate_resto'] == id);
@@ -130,6 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             ElevatedButton(
               onPressed: () {
+                setState(() {});
                 Navigator.pop(context);
               },
               child: const Text("Tidak Jadi"),
